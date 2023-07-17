@@ -1,6 +1,7 @@
 package com.jumptospringboot.board.service;
 
 import com.jumptospringboot.board.entity.Question;
+import com.jumptospringboot.board.entity.SiteUser;
 import com.jumptospringboot.board.exception.DataNotFoundException;
 import com.jumptospringboot.board.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +35,12 @@ public class QuestionService {
         }
     }
 
-    public void create(String subject, String content) {
+    public void create(String subject, String content, SiteUser siteUser) {
         Question q = new Question();
         q.setSubject(subject);
         q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
+        q.setAuthor(siteUser);
         this.questionRepository.save(q);
     }
 
@@ -48,5 +50,16 @@ public class QuestionService {
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.questionRepository.findAll(pageable);
+    }
+
+    public void modify(Question question, String subject, String content) {
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+        questionRepository.save(question);
+    }
+
+    public void delete(Question question) {
+        questionRepository.delete(question);
     }
 }

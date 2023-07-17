@@ -1,6 +1,6 @@
 package com.jumptospringboot.board.controller;
 
-import com.jumptospringboot.board.UserService;
+import com.jumptospringboot.board.service.UserService;
 import com.jumptospringboot.board.entity.dto.UserCreateForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
