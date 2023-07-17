@@ -36,19 +36,16 @@ public class QuestionController {
     }
 
     @GetMapping("/create")
-    public String questionCreate() {
+    public String questionCreate(QuestionForm questionForm) {
         return "question_form";
     }
 
     @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return "question_form";
-        questionService.create(questionForm.getSubject(), questionForm.getContent());
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
+        this.questionService.create(questionForm.getSubject(), questionForm.getContent());
         return "redirect:/question/list";
-    }
-
-    @GetMapping("/create")
-    public String questionCreate(QuestionForm questionForm) {
-        return "question_form";
     }
 }
